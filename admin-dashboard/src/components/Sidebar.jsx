@@ -1,33 +1,44 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import {
+  GridIcon,
+  CalendarIcon,
+  PlusIcon,
+  StethoscopeIcon,
+  UsersIcon,
+} from './Icons'
 
 const links = [
-  { to: '/', label: 'Dashboard', icon: '📊', end: true },
-  { to: '/appointments', label: 'Appointments', icon: '📅' },
-  { to: '/add-doctor', label: 'Add Doctor', icon: '➕' },
-  { to: '/doctors', label: 'Doctors', icon: '🩺' },
-  { to: '/patients', label: 'Patients', icon: '👥' },
+  { to: '/', label: 'Dashboard', Icon: GridIcon, end: true },
+  { to: '/appointments', label: 'Appointments', Icon: CalendarIcon },
+  { to: '/add-doctor', label: 'Add Doctor', Icon: PlusIcon },
+  { to: '/doctors', label: 'Doctors', Icon: StethoscopeIcon },
+  { to: '/patients', label: 'Patients', Icon: UsersIcon },
 ]
 
 const Sidebar = () => {
   return (
-    <aside className='min-h-[calc(100vh-57px)] w-16 shrink-0 border-r border-slate-200 bg-white sm:w-60'>
-      <nav className='flex flex-col gap-1 py-4'>
-        {links.map((link) => (
+    <aside className='sticky top-[61px] h-[calc(100vh-61px)] w-16 shrink-0 border-r border-slate-200 bg-white sm:w-64'>
+      <nav className='flex flex-col gap-1 p-3'>
+        <p className='hidden px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400 sm:block'>
+          Menu
+        </p>
+        {links.map(({ to, label, Icon, end }) => (
           <NavLink
-            key={link.to}
-            to={link.to}
-            end={link.end}
+            key={to}
+            to={to}
+            end={end}
+            title={label}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 text-sm font-medium transition sm:px-6 ${
+              `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
                 isActive
-                  ? 'border-r-4 border-blue-600 bg-blue-50 text-blue-700'
-                  : 'text-slate-600 hover:bg-slate-50'
+                  ? 'bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-sm shadow-blue-200'
+                  : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
               }`
             }
           >
-            <span className='text-lg'>{link.icon}</span>
-            <span className='hidden sm:inline'>{link.label}</span>
+            <Icon className='h-5 w-5 shrink-0' />
+            <span className='hidden sm:inline'>{label}</span>
           </NavLink>
         ))}
       </nav>

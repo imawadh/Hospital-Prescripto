@@ -32,11 +32,14 @@ const EditPatient = () => {
   }
 
   if (!form) {
-    return <p className='text-slate-400'>Loading patient...</p>
+    return (
+      <div className='flex h-64 items-center justify-center text-sm text-slate-400'>
+        Loading patient...
+      </div>
+    )
   }
 
-  const onChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value })
+  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -55,18 +58,19 @@ const EditPatient = () => {
   }
 
   const field =
-    'w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500'
-  const labelCls = 'mb-1 block text-sm font-medium text-slate-600'
+    'w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100'
+  const labelCls = 'mb-1.5 block text-sm font-medium text-slate-600'
 
   return (
     <div>
-      <h1 className='mb-5 text-xl font-semibold text-slate-800'>
-        Edit Patient
-      </h1>
+      <h1 className='text-xl font-bold text-slate-800'>Edit Patient</h1>
+      <p className='mb-6 text-sm text-slate-400'>
+        Update this patient&apos;s account details
+      </p>
 
       <form
         onSubmit={onSubmit}
-        className='max-w-2xl rounded-xl border border-slate-200 bg-white p-6'
+        className='max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 sm:p-7'
       >
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
           <div>
@@ -142,18 +146,18 @@ const EditPatient = () => {
           </div>
         </div>
 
-        <div className='mt-6 flex gap-3'>
+        <div className='mt-6 flex gap-3 border-t border-slate-100 pt-5'>
           <button
             type='submit'
             disabled={loading}
-            className='rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 disabled:opacity-60'
+            className='rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-200 transition hover:opacity-95 disabled:opacity-60'
           >
             {loading ? 'Saving...' : 'Save Changes'}
           </button>
           <button
             type='button'
             onClick={() => navigate('/patients')}
-            className='rounded-lg border border-slate-300 px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50'
+            className='rounded-xl border border-slate-200 px-6 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50'
           >
             Cancel
           </button>

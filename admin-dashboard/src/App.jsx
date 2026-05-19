@@ -20,21 +20,23 @@ const App = () => {
   }
 
   return (
-    <div className='min-h-screen bg-slate-50'>
+    <div className='min-h-screen bg-slate-50 text-slate-800'>
       <Navbar />
       <div className='flex'>
         <Sidebar />
-        <main className='flex-1 p-4 sm:p-6'>
-          <Routes>
-            <Route path='/' element={<Dashboard />} />
-            <Route path='/add-doctor' element={<AddDoctor />} />
-            <Route path='/doctors' element={<DoctorsList />} />
-            <Route path='/doctors/:id/edit' element={<EditDoctor />} />
-            <Route path='/appointments' element={<AllAppointments />} />
-            <Route path='/patients' element={<PatientsList />} />
-            <Route path='/patients/:id/edit' element={<EditPatient />} />
-            <Route path='*' element={<Navigate to='/' replace />} />
-          </Routes>
+        <main className='flex-1 px-4 py-6 sm:px-8'>
+          <div className='mx-auto max-w-7xl'>
+            <Routes>
+              <Route path='/' element={<Dashboard />} />
+              <Route path='/add-doctor' element={<AddDoctor />} />
+              <Route path='/doctors' element={<DoctorsList />} />
+              <Route path='/doctors/:id/edit' element={<EditDoctor />} />
+              <Route path='/appointments' element={<AllAppointments />} />
+              <Route path='/patients' element={<PatientsList />} />
+              <Route path='/patients/:id/edit' element={<EditPatient />} />
+              <Route path='*' element={<Navigate to='/' replace />} />
+            </Routes>
+          </div>
         </main>
       </div>
     </div>

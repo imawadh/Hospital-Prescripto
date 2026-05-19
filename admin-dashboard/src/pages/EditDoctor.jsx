@@ -47,11 +47,14 @@ const EditDoctor = () => {
   }
 
   if (!form) {
-    return <p className='text-slate-400'>Loading doctor...</p>
+    return (
+      <div className='flex h-64 items-center justify-center text-sm text-slate-400'>
+        Loading doctor...
+      </div>
+    )
   }
 
-  const onChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value })
+  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -79,25 +82,26 @@ const EditDoctor = () => {
   }
 
   const field =
-    'w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500'
-  const labelCls = 'mb-1 block text-sm font-medium text-slate-600'
+    'w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100'
+  const labelCls = 'mb-1.5 block text-sm font-medium text-slate-600'
 
   return (
     <div>
-      <h1 className='mb-5 text-xl font-semibold text-slate-800'>
-        Edit Doctor
-      </h1>
+      <h1 className='text-xl font-bold text-slate-800'>Edit Doctor</h1>
+      <p className='mb-6 text-sm text-slate-400'>
+        Update this doctor&apos;s profile details
+      </p>
 
       <form
         onSubmit={onSubmit}
-        className='rounded-xl border border-slate-200 bg-white p-6'
+        className='rounded-2xl border border-slate-200 bg-white p-6 sm:p-7'
       >
         <div className='mb-6 flex items-center gap-4'>
           <label className='cursor-pointer'>
             <img
               src={image ? URL.createObjectURL(image) : form.image}
               alt=''
-              className='h-20 w-20 rounded-full bg-slate-100 object-cover'
+              className='h-20 w-20 rounded-2xl bg-slate-100 object-cover'
             />
             <input
               type='file'
@@ -106,9 +110,12 @@ const EditDoctor = () => {
               onChange={(e) => setImage(e.target.files[0])}
             />
           </label>
-          <p className='text-sm text-slate-400'>
-            Click the image to replace it
-          </p>
+          <div>
+            <p className='text-sm font-medium text-slate-700'>Doctor photo</p>
+            <p className='text-xs text-slate-400'>
+              Click the image to replace it.
+            </p>
+          </div>
         </div>
 
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
@@ -234,22 +241,22 @@ const EditDoctor = () => {
             onChange={onChange}
             required
             rows={4}
-            className={field}
+            className={`${field} resize-none`}
           />
         </div>
 
-        <div className='mt-6 flex gap-3'>
+        <div className='mt-6 flex gap-3 border-t border-slate-100 pt-5'>
           <button
             type='submit'
             disabled={loading}
-            className='rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 disabled:opacity-60'
+            className='rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-200 transition hover:opacity-95 disabled:opacity-60'
           >
             {loading ? 'Saving...' : 'Save Changes'}
           </button>
           <button
             type='button'
             onClick={() => navigate('/doctors')}
-            className='rounded-lg border border-slate-300 px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50'
+            className='rounded-xl border border-slate-200 px-6 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50'
           >
             Cancel
           </button>

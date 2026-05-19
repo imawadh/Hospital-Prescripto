@@ -1,101 +1,119 @@
 import React, { useContext, useEffect } from 'react'
 import { AdminContext } from '../context/AdminContext'
 import { formatSlotDate } from '../utils/format'
+import {
+  StethoscopeIcon,
+  ClipboardIcon,
+  UsersIcon,
+  CloseIcon,
+} from '../components/Icons'
 
-const StatCard = ({ label, value, icon, color }) => (
-  <div className='flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-5'>
+const StatCard = ({ label, value, Icon, tint }) => (
+  <div className='flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-md hover:shadow-slate-200/70'>
     <span
-      className={`flex h-12 w-12 items-center justify-center rounded-lg text-xl ${color}`}
+      className={`flex h-12 w-12 items-center justify-center rounded-xl ${tint}`}
     >
-      {icon}
+      <Icon className='h-6 w-6' />
     </span>
     <div>
-      <p className='text-2xl font-semibold text-slate-800'>{value}</p>
+      <p className='text-2xl font-bold text-slate-800'>{value}</p>
       <p className='text-sm text-slate-400'>{label}</p>
     </div>
   </div>
 )
 
 const Dashboard = () => {
-  const { dashData, getDashData, cancelAppointment } =
-    useContext(AdminContext)
+  const { dashData, getDashData, cancelAppointment } = useContext(AdminContext)
 
   useEffect(() => {
     getDashData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!dashData) {
-    return <p className='text-slate-400'>Loading dashboard...</p>
+    return (
+      <div className='flex h-64 items-center justify-center text-sm text-slate-400'>
+        Loading dashboard...
+      </div>
+    )
   }
 
   return (
     <div>
-      <h1 className='mb-5 text-xl font-semibold text-slate-800'>Dashboard</h1>
+      <h1 className='text-xl font-bold text-slate-800'>Dashboard</h1>
+      <p className='mb-6 text-sm text-slate-400'>
+        Overview of the hospital at a glance
+      </p>
 
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-3'>
         <StatCard
           label='Doctors'
           value={dashData.doctors}
-          icon='🩺'
-          color='bg-blue-100'
+          Icon={StethoscopeIcon}
+          tint='bg-blue-100 text-blue-600'
         />
         <StatCard
           label='Appointments'
           value={dashData.appointments}
-          icon='📅'
-          color='bg-green-100'
+          Icon={ClipboardIcon}
+          tint='bg-indigo-100 text-indigo-600'
         />
         <StatCard
           label='Patients'
           value={dashData.patients}
-          icon='👥'
-          color='bg-amber-100'
+          Icon={UsersIcon}
+          tint='bg-amber-100 text-amber-600'
         />
       </div>
 
-      <div className='mt-6 rounded-xl border border-slate-200 bg-white'>
-        <p className='border-b border-slate-200 px-5 py-3 font-semibold text-slate-700'>
-          Latest Appointments
-        </p>
+      <div className='mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white'>
+        <div className='flex items-center gap-2 border-b border-slate-100 px-5 py-4'>
+          <span className='h-4 w-1 rounded-full bg-blue-600' />
+          <p className='font-semibold text-slate-700'>Latest Appointments</p>
+        </div>
+
         {dashData.latestAppointments?.length === 0 && (
-          <p className='px-5 py-4 text-sm text-slate-400'>
+          <p className='px-5 py-10 text-center text-sm text-slate-400'>
             No appointments yet.
           </p>
         )}
+
         {dashData.latestAppointments?.map((item) => (
           <div
             key={item._id}
-            className='flex items-center justify-between border-b border-slate-100 px-5 py-3 last:border-0'
+            className='flex items-center justify-between gap-3 border-b border-slate-50 px-5 py-3.5 transition last:border-0 hover:bg-slate-50'
           >
-            <div className='flex items-center gap-3'>
+            <div className='flex min-w-0 items-center gap-3'>
               <img
                 src={item.docData?.image}
                 alt=''
-                className='h-10 w-10 rounded-full bg-slate-100 object-cover'
+                className='h-10 w-10 shrink-0 rounded-full border border-slate-200 bg-slate-100 object-cover'
               />
-              <div>
-                <p className='text-sm font-medium text-slate-800'>
+              <div className='min-w-0'>
+                <p className='truncate text-sm font-semibold text-slate-800'>
                   {item.docData?.name}
                 </p>
                 <p className='text-xs text-slate-400'>
-                  {formatSlotDate(item.slotDate)} | {item.slotTime}
+                  {formatSlotDate(item.slotDate)} · {item.slotTime}
                 </p>
               </div>
             </div>
+
             {item.cancelled ? (
-              <span className='text-xs font-medium text-red-500'>
+              <span className='shrink-0 rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-500'>
                 Cancelled
               </span>
             ) : item.isCompleted ? (
-              <span className='text-xs font-medium text-green-600'>
+              <span className='shrink-0 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600'>
                 Completed
               </span>
             ) : (
               <button
                 onClick={() => cancelAppointment(item._id)}
-                className='rounded-md border border-red-200 px-3 py-1 text-xs font-medium text-red-500 hover:bg-red-50'
+                title='Cancel appointment'
+                className='flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-500 transition hover:bg-red-100'
               >
-                Cancel
+                <CloseIcon className='h-4 w-4' />
               </button>
             )}
           </div>

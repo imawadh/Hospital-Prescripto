@@ -35,8 +35,8 @@ const Doctors = () => {
       </p>
 
       <div className='mt-8 flex flex-col gap-8 lg:flex-row'>
-        {/* Speciality filter */}
-        <aside className='lg:w-60 lg:shrink-0'>
+        {/* Speciality filter — stays in place while the list scrolls */}
+        <aside className='lg:sticky lg:top-24 lg:w-60 lg:shrink-0 lg:self-start'>
           <p className='mb-3 hidden text-xs font-semibold uppercase tracking-wider text-slate-400 lg:block'>
             Filter by speciality
           </p>
