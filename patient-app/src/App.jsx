@@ -5,10 +5,14 @@ import Footer from './components/Footer'
 
 const App = () => {
   return (
-    <div className='mx-4 sm:mx-[10%]'>
-      <NavBar/>
-      <AppRoutes/>
-      <Footer/>
+    <div className='flex min-h-screen flex-col bg-slate-50 text-slate-700'>
+      <NavBar />
+      <main className='flex-1'>
+        <div className='mx-auto w-full max-w-7xl px-4 sm:px-6'>
+          <AppRoutes />
+        </div>
+      </main>
+      <Footer />
     </div>
   )
 }

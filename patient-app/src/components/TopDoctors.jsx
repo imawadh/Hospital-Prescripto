@@ -1,72 +1,58 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AppContext } from "../context/AppContext"
+import { AppContext } from '../context/AppContext'
+import DoctorCard from './DoctorCard'
+import { ArrowRightIcon } from './Icons'
 
 const TopDoctors = () => {
-  const navigate = useNavigate();
-  const { doctors } = useContext(AppContext);
+  const navigate = useNavigate()
+  const { doctors } = useContext(AppContext)
 
   return (
-    <div className="py-16 text-center">
-      <h1 className="text-2xl font-semibold text-slate-800 md:text-3xl">
-        Top Doctors to Book
-      </h1>
-      <p className="mx-auto mt-3 max-w-xl text-sm text-slate-500">
-        Simply browse through our extensive list of trusted doctors.
-      </p>
-
-      <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {doctors.slice(0, 8).map((item) => (
-          <DoctorCard
-            onClick={() => { navigate(`/my-appointments/${item._id}`); scrollTo(0, 0); }}
-            item={item}
-            key={item._id}
-          />
-        ))}
+    <section className='py-16 sm:py-20'>
+      <div className='text-center'>
+        <p className='text-sm font-semibold uppercase tracking-wider text-blue-600'>
+          Our Doctors
+        </p>
+        <h2 className='mt-2 text-2xl font-bold text-slate-800 sm:text-3xl'>
+          Top Doctors to Book
+        </h2>
+        <p className='mx-auto mt-3 max-w-xl text-sm text-slate-500'>
+          Meet some of our most-booked, highly-rated specialists.
+        </p>
       </div>
 
-      <button
-        onClick={() => { navigate('/doctors'); scrollTo(0, 0); }}
-        className="mt-10 rounded-full bg-blue-50 px-8 py-3 text-sm font-medium text-blue-600 transition hover:bg-blue-100"
-      >
-        See all Doctors
-      </button>
-    </div>
-  )
-}
-
-const DoctorCard = ({ item, onClick }) => {
-  return (
-    <div
-      onClick={onClick}
-      className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white text-left transition hover:-translate-y-1 hover:shadow-lg"
-    >
-      <div className="overflow-hidden bg-blue-50">
-        <img
-          src={item.image}
-          alt={item.name}
-          className="h-48 w-full object-cover transition group-hover:scale-105"
-        />
-      </div>
-      <div className="p-4">
-        <div className="mb-2 flex items-center gap-2">
-          <span
-            className={`h-2 w-2 rounded-full ${
-              item.available ? "bg-green-500" : "bg-slate-300"
-            }`}
-          ></span>
-          <p
-            className={`text-xs font-medium ${
-              item.available ? "text-green-600" : "text-slate-400"
-            }`}
-          >
-            {item.available ? "Available" : "Not Available"}
-          </p>
+      {doctors.length === 0 ? (
+        <p className='mt-10 text-center text-sm text-slate-400'>
+          Loading doctors...
+        </p>
+      ) : (
+        <div className='mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4'>
+          {doctors.slice(0, 8).map((item) => (
+            <DoctorCard
+              key={item._id}
+              item={item}
+              onClick={() => {
+                navigate(`/my-appointments/${item._id}`)
+                scrollTo(0, 0)
+              }}
+            />
+          ))}
         </div>
-        <p className="font-semibold text-slate-800">{item.name}</p>
-        <p className="text-sm text-slate-500">{item.speciality}</p>
+      )}
+
+      <div className='mt-10 text-center'>
+        <button
+          onClick={() => {
+            navigate('/doctors')
+            scrollTo(0, 0)
+          }}
+          className='inline-flex items-center gap-2 rounded-full bg-blue-600 px-7 py-3 text-sm font-semibold text-white shadow-sm shadow-blue-200 transition hover:bg-blue-700'
+        >
+          View all doctors <ArrowRightIcon className='h-4 w-4' />
+        </button>
       </div>
-    </div>
+    </section>
   )
 }
 

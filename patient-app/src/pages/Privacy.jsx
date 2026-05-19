@@ -1,4 +1,5 @@
 import React from 'react'
+import { ShieldIcon } from '../components/Icons'
 
 const sections = [
   {
@@ -21,24 +22,35 @@ const sections = [
 
 const Privacy = () => {
   return (
-    <div className="py-8">
-      <h1 className="text-center text-2xl font-semibold text-slate-800 sm:text-3xl">
-        Privacy <span className="text-blue-600">Policy</span>
-      </h1>
-      <p className="mx-auto mt-2 max-w-xl text-center text-sm text-slate-500">
-        Your privacy matters to us. Here&apos;s how we handle your information.
-      </p>
+    <div className='py-10'>
+      <div className='text-center'>
+        <span className='mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600'>
+          <ShieldIcon className='h-6 w-6' />
+        </span>
+        <h1 className='mt-4 text-2xl font-bold text-slate-800 sm:text-3xl'>
+          Privacy <span className='text-blue-600'>Policy</span>
+        </h1>
+        <p className='mx-auto mt-3 max-w-xl text-sm text-slate-500'>
+          Your privacy matters to us. Here&apos;s how we handle your
+          information.
+        </p>
+      </div>
 
-      <div className="mx-auto mt-10 max-w-3xl space-y-4">
-        {sections.map((s) => (
+      <div className='mx-auto mt-10 max-w-3xl space-y-4'>
+        {sections.map((s, i) => (
           <div
             key={s.title}
-            className="rounded-2xl border border-slate-200 bg-white p-6"
+            className='flex gap-4 rounded-2xl border border-slate-200 bg-white p-6'
           >
-            <h2 className="font-semibold text-slate-800">{s.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-slate-500">
-              {s.text}
-            </p>
+            <span className='flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-sm font-bold text-blue-600'>
+              {i + 1}
+            </span>
+            <div>
+              <h2 className='font-semibold text-slate-800'>{s.title}</h2>
+              <p className='mt-1.5 text-sm leading-relaxed text-slate-500'>
+                {s.text}
+              </p>
+            </div>
           </div>
         ))}
       </div>
