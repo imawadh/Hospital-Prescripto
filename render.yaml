@@ -1,0 +1,38 @@
+# Render Blueprint for the Prescripto API.
+# In Render: New > Blueprint > pick this repo. Secrets marked "sync: false"
+# are prompted for on first deploy and never stored in this file.
+services:
+  - type: web
+    name: hospital-prescripto-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_DB
+        value: prescripto
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CORS_ORIGINS
+        value: https://awadh-hospital-admin-app.vercel.app,https://awadh-doctor-app.vercel.app,https://awadh-patient-app.vercel.app
+      - key: BACKEND_URL
+        value: https://hospital-prescripto.onrender.com
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
