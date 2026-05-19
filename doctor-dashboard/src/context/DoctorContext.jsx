@@ -5,8 +5,10 @@ import { toast } from "react-toastify";
 export const DoctorContext = createContext();
 
 const DoctorContextProvider = ({ children }) => {
-  const backendUrl =
-    import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+  // Strip any trailing slash so requests never produce a "//api/..." path.
+  const backendUrl = (
+    import.meta.env.VITE_BACKEND_URL || "http://localhost:4000"
+  ).replace(/\/+$/, "");
   const currencySymbol = "$";
 
   const [dToken, setDToken] = useState(
